@@ -1,0 +1,182 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McGregor's Theory X and Theory Y Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h3 {
+            color: #2c3e50;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>McGregor's Theory X and Theory Y Quiz</h1>
+    <p>Test your understanding of McGregor's Theory X and Theory Y with these real-world scenario-based questions.</p>
+
+    <div class="question">
+        <h3>Question 1: Managing a Software Development Team</h3>
+        <p>A project manager notices that her software development team frequently misses deadlines. She assumes the team lacks ambition and needs constant supervision to stay on task. She implements strict daily check-ins and micromanages their work. Which theory does her management style align with?</p>
+        <div class="options">
+            <label><input type="radio" name="q1" value="a"> A) Theory X</label>
+            <label><input type="radio" name="q1" value="b"> B) Theory Y</label>
+            <label><input type="radio" name="q1" value="c"> C) Both Theory X and Theory Y</label>
+            <label><input type="radio" name="q1" value="d"> D) Neither Theory X nor Theory Y</label>
+        </div>
+        <button onclick="showAnswer(1)">Show Answer</button>
+        <div id="answer1" class="answer">
+            <strong>Answer: A) Theory X</strong><br>
+            The manager's assumption that the team lacks ambition and requires constant supervision aligns with Theory X, which posits that employees are inherently lazy, lack ambition, and need to be closely monitored and controlled.
+        </div>
+    </div>
+
+    <div class="question">
+        <h3>Question 2: Employee Initiative in a Retail Store</h3>
+        <p>A retail store manager encourages employees to suggest new display ideas and take initiative in improving customer service without needing constant direction. He believes his team is self-motivated and enjoys taking on responsibilities. This approach reflects which theory?</p>
+        <div class="options">
+            <label><input type="radio" name="q2" value="a"> A) Theory X</label>
+            <label><input type="radio" name="q2" value="b"> B) Theory Y</label>
+            <label><input type="radio" name="q2" value="c"> C) Both Theory X and Theory Y</label>
+            <label><input type="radio" name="q2" value="d"> D) Neither Theory X nor Theory Y</label>
+        </div>
+        <button onclick="showAnswer(2)">Show Answer</button>
+        <div id="answer2" class="answer">
+            <strong>Answer: B) Theory Y</strong><br>
+            The manager's belief that employees are self-motivated and capable of taking initiative aligns with Theory Y, which assumes employees are creative, responsible, and motivated to work without needing close supervision.
+        </div>
+    </div>
+
+    <div class="question">
+        <h3>Question 3: Handling a Low-Performing Team Member</h3>
+        <p>A team leader notices one employee consistently underperforms. Instead of reprimanding them, the leader offers additional training and discusses the employee’s career goals to understand their motivations. This approach is most consistent with which theory?</p>
+        <div class="options">
+            <label><input type="radio" name="q3" value="a"> A) Theory X</label>
+            <label><input type="radio" name="q3" value="b"> B) Theory Y</label>
+            <label><input type="radio" name="q3" value="c"> C) Both Theory X and Theory Y</label>
+            <label><input type="radio" name="q3" value="d"> D) Neither Theory X nor Theory Y</label>
+        </div>
+        <button onclick="showAnswer(3)">Show Answer</button>
+        <div id="answer3" class="answer">
+            <strong>Answer: B) Theory Y</strong><br>
+            The leader’s approach assumes the employee is capable of improvement and motivated by personal goals, which aligns with Theory Y’s view that employees are self-motivated and respond well to opportunities for growth.
+        </div>
+    </div>
+
+    <div class="question">
+        <h3>Question 4: Factory Floor Supervision</h3>
+        <p>In a manufacturing plant, the supervisor believes workers only perform well when given clear instructions and strict oversight. He enforces rigid rules and monitors output closely, assuming workers avoid responsibility. This management style reflects which theory?</p>
+        <div class="options">
+            <label><input type="radio" name="q4" value="a"> A) Theory X</label>
+            <label><input type="radio" name="q4" value="b"> B) Theory Y</label>
+            <label><input type="radio" name="q4" value="c"> C) Both Theory X and Theory Y</label>
+            <label><input type="radio" name="q4" value="d"> D) Neither Theory X nor Theory Y</label>
+        </div>
+        <button onclick="showAnswer(4)">Show Answer</button>
+        <div id="answer4" class="answer">
+            <strong>Answer: A) Theory X</strong><br>
+            The supervisor’s belief that workers avoid responsibility and need strict oversight is a hallmark of Theory X, which assumes employees are inherently unmotivated and require control to perform effectively.
+        </div>
+    </div>
+
+    <div class="question">
+        <h3>Question 5: Team Collaboration in a Marketing Firm</h3>
+        <p>A marketing firm’s manager gives her team autonomy to develop a new campaign, trusting they will collaborate creatively and meet deadlines without her direct involvement. She believes her team thrives when given freedom. This reflects which theory?</p>
+        <div class="options">
+            <label><input type="radio" name="q5" value="a"> A) Theory X</label>
+            <label><input type="radio" name="q5" value="b"> B) Theory Y</label>
+            <label><input type="radio" name="q5" value="c"> C) Both Theory X and Theory Y</label>
+            <label><input type="radio" name="q5" value="d"> D) Neither Theory X nor Theory Y</label>
+        </div>
+        <button onclick="showAnswer(5)">Show Answer</button>
+        <div id="answer5" class="answer">
+            <strong>Answer: B) Theory Y</strong><br>
+            The manager’s trust in her team’s creativity and ability to work autonomously aligns with Theory Y, which assumes employees are self-motivated, responsible, and capable of working without close supervision.
+        </div>
+    </div>
+
+    <script>
+        function showAnswer(questionNumber) {
+            const answerDiv = document.getElementById(`answer${questionNumber}`);
+            answerDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
