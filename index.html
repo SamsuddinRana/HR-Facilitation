@@ -1,245 +1,177 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
 
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>McGregor's Theory X and Y Quiz</title>
+    <title>Recognition and Praise Theory - MCQs</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .question {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .question p {
-            margin: 0 0 10px;
-        }
-        .options label {
-            display: block;
-            margin: 5px 0;
-        }
-        .answer {
-            display: none;
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-left: 3px solid #4CAF50;
-            margin-top: 10px;
-        }
-        .answer-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .answer-button:hover {
-            background-color: #45a049;
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .question { margin-bottom: 20px; }
+        .explanation { display: none; margin-top: 10px; color: green; }
+        button { margin-top: 5px; }
     </style>
-</head>
-<body>
-    <h1>McGregor's Theory X and Y Quiz</h1>
-    <div class="question">
-        <p>1. A manager notices that employees are consistently late and require constant supervision. Which theory aligns with this perspective?</p>
-        <div class="options">
-            <label><input type="radio" name="q1" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q1" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q1" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q1" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer1')">Show Answer</button>
-        <div id="answer1" class="answer">
-            <strong>Answer: a) Theory X</strong><br>
-            Theory X assumes employees are inherently lazy, lack ambition, and need close supervision, aligning with the manager's observation of tardiness and need for oversight.
-        </div>
-    </div>
-    <div class="question">
-        <p>2. A team leader encourages employees to set their own goals and trusts them to complete tasks independently. This approach reflects which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q2" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q2" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q2" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q2" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer2')">Show Answer</button>
-        <div id="answer2" class="answer">
-            <strong>Answer: b) Theory Y</strong><br>
-            Theory Y posits that employees are self-motivated, responsible, and capable of working without close supervision, which matches the leader’s trust in employees’ autonomy.
-        </div>
-    </div>
-    <div class="question">
-        <p>3. In a retail store, the manager uses strict rules and penalties to ensure staff meet sales targets. This management style is characteristic of which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q3" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q3" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q3" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q3" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer3')">Show Answer</button>
-        <div id="answer3" class="answer">
-            <strong>Answer: a) Theory X</strong><br>
-            Theory X managers rely on control and external motivators like penalties to enforce performance, as seen in the use of strict rules to meet sales targets.
-        </div>
-    </div>
-    <div class="question">
-        <p>4. A software company allows developers to choose their projects based on interest and provides flexible work hours. This aligns with which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q4" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q4" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q4" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q4" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer4')">Show Answer</button>
-        <div id="answer4" class="answer">
-            <strong>Answer: b) Theory Y</strong><br>
-            Theory Y supports the idea that employees are motivated by intrinsic factors like interest and autonomy, reflected in the company’s flexible and empowering approach.
-        </div>
-    </div>
-    <div class="question">
-        <p>5. A factory supervisor believes workers only care about pay and avoid extra responsibilities. This belief is rooted in which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q5" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q5" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q5" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q5" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer5')">Show Answer</button>
-        <div id="answer5" class="answer">
-            <strong>Answer: a) Theory X</strong><br>
-            Theory X assumes employees are motivated primarily by extrinsic rewards like pay and avoid responsibility, matching the supervisor’s perspective.
-        </div>
-    </div>
-    <div class="question">
-        <p>6. A marketing team is given creative freedom to design campaigns and is trusted to meet deadlines. This management style reflects which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q6" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q6" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q6" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q6" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer6')">Show Answer</button>
-        <div id="answer6" class="answer">
-            <strong>Answer: b) Theory Y</strong><br>
-            Theory Y encourages creativity and trusts employees to be self-directed, as seen in the team’s freedom and responsibility to meet deadlines.
-        </div>
-    </div>
-    <div class="question">
-        <p>7. A manager micromanages a team, checking every task daily. This behavior is most associated with which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q7" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q7" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q7" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q7" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer7')">Show Answer</button>
-        <div id="answer7" class="answer">
-            <strong>Answer: a) Theory X</strong><br>
-            Micromanagement reflects Theory X’s assumption that employees need constant monitoring due to a lack of self-motivation or reliability.
-        </div>
-    </div>
-    <div class="question">
-        <p>8. A project manager assumes team members are eager to learn and take on challenging tasks. This assumption aligns with which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q8" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q8" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q8" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q8" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer8')">Show Answer</button>
-        <div id="answer8" class="answer">
-            <strong>Answer: b) Theory Y</strong><br>
-            Theory Y assumes employees are ambitious, eager to learn, and willing to take on challenges, which matches the manager’s perspective.
-        </div>
-    </div>
-    <div class="question">
-        <p>9. In a call center, employees are given scripts and monitored closely to ensure compliance. This approach is indicative of which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q9" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q9" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q9" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q9" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer9')">Show Answer</button>
-        <div id="answer9" class="answer">
-            <strong>Answer: a) Theory X</strong><br>
-            Close monitoring and rigid scripts reflect Theory X’s belief that employees need strict control to perform effectively.
-        </div>
-    </div>
-    <div class="question">
-        <p>10. A manager organizes team-building activities to foster collaboration and creativity. This aligns with which theory?</p>
-        <div class="options">
-            <label><input type="radio" name="q10" value="a"> a) Theory X</label>
-            <label><input type="radio" name="q10" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q10" value="c"> c) Both theories</label>
-            <label><input type="radio" name="q10" value="d"> d) Neither theory</label>
-        </div>
-        <button class="answer-button" onclick="toggleAnswer('answer10')">Show Answer</button>
-        <div id="answer10" class="answer">
-            <strong>Answer: b) Theory Y</strong><br>
-            Theory Y promotes an environment where employees’ creativity and collaboration are valued, as seen in the team-building initiatives.
-        </div>
-    </div>
-
     <script>
-        function toggleAnswer(id) {
-            const answer = document.getElementById(id);
-            if (answer.style.display === "none" || answer.style.display === "") {
-                answer.style.display = "block";
+        function toggleExplanation(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === "none") {
+                x.style.display = "block";
             } else {
-                answer.style.display = "none";
+                x.style.display = "none";
             }
         }
     </script>
+</head>
+<body>
+    <h1>Recognition and Praise Theory - Real World Scenario Based MCQs</h1>
+
+    <div class="question">
+        <p><strong>1. Sarah consistently meets her project deadlines and helps her teammates. Her manager publicly praises her during a team meeting. What is the likely impact?</strong></p>
+        <ul>
+            <li>A. Sarah feels embarrassed</li>
+            <li>B. Sarah feels motivated and valued</li>
+            <li>C. Sarah ignores the praise</li>
+            <li>D. Sarah becomes overconfident</li>
+        </ul>
+        <button onclick="toggleExplanation('exp0')">Show Explanation</button>
+        <div class="explanation" id="exp0">
+            <strong>Answer: B</strong><br>
+            Public recognition boosts morale and reinforces positive behavior, making Sarah feel valued and motivated.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>2. John receives a personalized thank-you email from his supervisor for his exceptional work on a client presentation. What aspect of recognition is being used?</strong></p>
+        <ul>
+            <li>A. Public praise</li>
+            <li>B. Monetary reward</li>
+            <li>C. Personalized praise</li>
+            <li>D. Team celebration</li>
+        </ul>
+        <button onclick="toggleExplanation('exp1')">Show Explanation</button>
+        <div class="explanation" id="exp1">
+            <strong>Answer: C</strong><br>
+            Personalized praise acknowledges individual contributions and strengthens employee engagement.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>3. A manager praises the entire team for their collaborative effort in achieving a milestone. What is the benefit of this approach?</strong></p>
+        <ul>
+            <li>A. It creates competition</li>
+            <li>B. It fosters team unity</li>
+            <li>C. It reduces individual accountability</li>
+            <li>D. It delays project timelines</li>
+        </ul>
+        <button onclick="toggleExplanation('exp2')">Show Explanation</button>
+        <div class="explanation" id="exp2">
+            <strong>Answer: B</strong><br>
+            Recognizing team efforts promotes unity and encourages collaborative behavior.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>4. Lisa's manager only gives praise during annual reviews. What is a potential drawback of this approach?</strong></p>
+        <ul>
+            <li>A. Employees feel overwhelmed</li>
+            <li>B. Praise loses its impact</li>
+            <li>C. Employees forget their achievements</li>
+            <li>D. Praise becomes more meaningful</li>
+        </ul>
+        <button onclick="toggleExplanation('exp3')">Show Explanation</button>
+        <div class="explanation" id="exp3">
+            <strong>Answer: B</strong><br>
+            Infrequent recognition can diminish its motivational impact; regular praise is more effective.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>5. During a team lunch, a manager highlights Tom's innovative solution to a problem. What type of recognition is this?</strong></p>
+        <ul>
+            <li>A. Private praise</li>
+            <li>B. Public recognition</li>
+            <li>C. Monetary reward</li>
+            <li>D. Constructive feedback</li>
+        </ul>
+        <button onclick="toggleExplanation('exp4')">Show Explanation</button>
+        <div class="explanation" id="exp4">
+            <strong>Answer: B</strong><br>
+            Public recognition in informal settings reinforces positive behavior and boosts morale.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>6. A company uses a peer-nomination system to recognize outstanding contributions. What is the advantage of this method?</strong></p>
+        <ul>
+            <li>A. Reduces manager workload</li>
+            <li>B. Encourages favoritism</li>
+            <li>C. Promotes peer appreciation</li>
+            <li>D. Limits recognition to top performers</li>
+        </ul>
+        <button onclick="toggleExplanation('exp5')">Show Explanation</button>
+        <div class="explanation" id="exp5">
+            <strong>Answer: C</strong><br>
+            Peer recognition fosters a culture of appreciation and strengthens team relationships.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>7. Emma receives praise for her work but feels it’s generic and not related to her actual contributions. What is missing?</strong></p>
+        <ul>
+            <li>A. Frequency</li>
+            <li>B. Personalization</li>
+            <li>C. Publicity</li>
+            <li>D. Timing</li>
+        </ul>
+        <button onclick="toggleExplanation('exp6')">Show Explanation</button>
+        <div class="explanation" id="exp6">
+            <strong>Answer: B</strong><br>
+            Generic praise lacks impact; personalized recognition is more meaningful and motivating.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>8. A manager regularly praises employees for small achievements. What is the likely outcome?</strong></p>
+        <ul>
+            <li>A. Employees become complacent</li>
+            <li>B. Praise loses value</li>
+            <li>C. Employees feel consistently motivated</li>
+            <li>D. Employees ignore the praise</li>
+        </ul>
+        <button onclick="toggleExplanation('exp7')">Show Explanation</button>
+        <div class="explanation" id="exp7">
+            <strong>Answer: C</strong><br>
+            Frequent recognition maintains motivation and reinforces continuous improvement.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>9. A team member is praised in front of clients for their dedication. What is the impact of external recognition?</strong></p>
+        <ul>
+            <li>A. It embarrasses the employee</li>
+            <li>B. It enhances employee reputation</li>
+            <li>C. It creates pressure</li>
+            <li>D. It undermines team effort</li>
+        </ul>
+        <button onclick="toggleExplanation('exp8')">Show Explanation</button>
+        <div class="explanation" id="exp8">
+            <strong>Answer: B</strong><br>
+            External recognition boosts employee confidence and enhances their professional reputation.
+        </div>
+    </div>
+    
+    <div class="question">
+        <p><strong>10. A manager uses recognition to highlight behaviors aligned with company values. What is the strategic benefit?</strong></p>
+        <ul>
+            <li>A. It confuses employees</li>
+            <li>B. It reinforces desired behaviors</li>
+            <li>C. It delays performance reviews</li>
+            <li>D. It reduces employee autonomy</li>
+        </ul>
+        <button onclick="toggleExplanation('exp9')">Show Explanation</button>
+        <div class="explanation" id="exp9">
+            <strong>Answer: B</strong><br>
+            Strategic recognition aligns employee actions with organizational goals and values.
+        </div>
+    </div>
+    
 </body>
 </html>
