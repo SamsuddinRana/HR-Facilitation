@@ -42,12 +42,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>McGregor's Theory X and Theory Y Quiz</title>
+    <title>McGregor's Theory X and Y Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             line-height: 1.6;
         }
@@ -57,182 +57,188 @@
         }
         .question {
             margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
         .question p {
-            font-weight: bold;
-            margin-bottom: 10px;
+            margin: 0 0 10px;
         }
         .options label {
             display: block;
             margin: 5px 0;
         }
-        .explanation {
+        .answer {
             display: none;
-            background-color: #f0f0f0;
+            background-color: #f9f9f9;
             padding: 10px;
+            border-left: 3px solid #4CAF50;
             margin-top: 10px;
-            border-left: 4px solid #4CAF50;
         }
-        button {
+        .answer-button {
             background-color: #4CAF50;
             color: white;
-            padding: 8px 16px;
+            padding: 8px 15px;
             border: none;
+            border-radius: 3px;
             cursor: pointer;
-            margin-top: 10px;
         }
-        button:hover {
+        .answer-button:hover {
             background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>McGregor's Theory X and Theory Y Quiz</h1>
+    <h1>McGregor's Theory X and Y Quiz</h1>
     <div class="question">
-        <p>1. A manager believes employees are lazy and need strict supervision. This aligns with:</p>
+        <p>1. A manager notices that employees are consistently late and require constant supervision. Which theory aligns with this perspective?</p>
         <div class="options">
             <label><input type="radio" name="q1" value="a"> a) Theory X</label>
             <label><input type="radio" name="q1" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q1" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q1" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q1" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q1" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(1)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation1">
-            <strong>Answer:</strong> a) Theory X<br>
-            <strong>Explanation:</strong> Theory X assumes employees are inherently lazy, lack ambition, and require close supervision and control to ensure productivity. The manager's belief reflects these assumptions.
+        <button class="answer-button" onclick="toggleAnswer('answer1')">Show Answer</button>
+        <div id="answer1" class="answer">
+            <strong>Answer: a) Theory X</strong><br>
+            Theory X assumes employees are inherently lazy, lack ambition, and need close supervision, aligning with the manager's observation of tardiness and need for oversight.
         </div>
     </div>
     <div class="question">
-        <p>2. In a tech startup, employees are given flexible hours and creative freedom. This aligns with:</p>
+        <p>2. A team leader encourages employees to set their own goals and trusts them to complete tasks independently. This approach reflects which theory?</p>
         <div class="options">
             <label><input type="radio" name="q2" value="a"> a) Theory X</label>
             <label><input type="radio" name="q2" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q2" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q2" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q2" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q2" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(2)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation2">
-            <strong>Answer:</strong> b) Theory Y<br>
-            <strong>Explanation:</strong> Theory Y assumes employees are self-motivated, enjoy their work, and thrive in environments that offer autonomy and responsibility. Flexible hours and creative freedom align with this approach.
+        <button class="answer-button" onclick="toggleAnswer('answer2')">Show Answer</button>
+        <div id="answer2" class="answer">
+            <strong>Answer: b) Theory Y</strong><br>
+            Theory Y posits that employees are self-motivated, responsible, and capable of working without close supervision, which matches the leader’s trust in employees’ autonomy.
         </div>
     </div>
     <div class="question">
-        <p>3. A factory supervisor uses threats of penalties to ensure workers meet quotas. This reflects:</p>
+        <p>3. In a retail store, the manager uses strict rules and penalties to ensure staff meet sales targets. This management style is characteristic of which theory?</p>
         <div class="options">
             <label><input type="radio" name="q3" value="a"> a) Theory X</label>
             <label><input type="radio" name="q3" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q3" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q3" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q3" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q3" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(3)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation3">
-            <strong>Answer:</strong> a) Theory X<br>
-            <strong>Explanation:</strong> Using threats and penalties to enforce productivity is a hallmark of Theory X, which assumes employees need external control and coercion to perform effectively.
+        <button class="answer-button" onclick="toggleAnswer('answer3')">Show Answer</button>
+        <div id="answer3" class="answer">
+            <strong>Answer: a) Theory X</strong><br>
+            Theory X managers rely on control and external motivators like penalties to enforce performance, as seen in the use of strict rules to meet sales targets.
         </div>
     </div>
     <div class="question">
-        <p>4. A manager encourages team brainstorming sessions to solve problems. This is an example of:</p>
+        <p>4. A software company allows developers to choose their projects based on interest and provides flexible work hours. This aligns with which theory?</p>
         <div class="options">
             <label><input type="radio" name="q4" value="a"> a) Theory X</label>
             <label><input type="radio" name="q4" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q4" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q4" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q4" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q4" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(4)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation4">
-            <strong>Answer:</strong> b) Theory Y<br>
-            <strong>Explanation:</strong> Theory Y emphasizes employees' creativity and problem-solving abilities. Encouraging brainstorming sessions reflects trust in employees' initiative and collaborative potential.
+        <button class="answer-button" onclick="toggleAnswer('answer4')">Show Answer</button>
+        <div id="answer4" class="answer">
+            <strong>Answer: b) Theory Y</strong><br>
+            Theory Y supports the idea that employees are motivated by intrinsic factors like interest and autonomy, reflected in the company’s flexible and empowering approach.
         </div>
     </div>
     <div class="question">
-        <p>5. A retail manager assumes employees only work for money and avoid responsibility. This aligns with:</p>
+        <p>5. A factory supervisor believes workers only care about pay and avoid extra responsibilities. This belief is rooted in which theory?</p>
         <div class="options">
             <label><input type="radio" name="q5" value="a"> a) Theory X</label>
             <label><input type="radio" name="q5" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q5" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q5" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q5" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q5" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(5)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation5">
-            <strong>Answer:</strong> a) Theory X<br>
-            <strong>Explanation:</strong> Theory X assumes employees are motivated primarily by extrinsic rewards like money and avoid responsibility, requiring strict oversight to ensure performance.
+        <button class="answer-button" onclick="toggleAnswer('answer5')">Show Answer</button>
+        <div id="answer5" class="answer">
+            <strong>Answer: a) Theory X</strong><br>
+            Theory X assumes employees are motivated primarily by extrinsic rewards like pay and avoid responsibility, matching the supervisor’s perspective.
         </div>
     </div>
     <div class="question">
-        <p>6. A project leader delegates tasks and trusts employees to meet deadlines. This reflects:</p>
+        <p>6. A marketing team is given creative freedom to design campaigns and is trusted to meet deadlines. This management style reflects which theory?</p>
         <div class="options">
             <label><input type="radio" name="q6" value="a"> a) Theory X</label>
             <label><input type="radio" name="q6" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q6" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q6" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q6" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q6" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(6)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation6">
-            <strong>Answer:</strong> b) Theory Y<br>
-            <strong>Explanation:</strong> Theory Y assumes employees are responsible and capable of working without close supervision. Delegating tasks and trusting employees aligns with this perspective.
+        <button class="answer-button" onclick="toggleAnswer('answer6')">Show Answer</button>
+        <div id="answer6" class="answer">
+            <strong>Answer: b) Theory Y</strong><br>
+            Theory Y encourages creativity and trusts employees to be self-directed, as seen in the team’s freedom and responsibility to meet deadlines.
         </div>
     </div>
     <div class="question">
-        <p>7. A manager micromanages every task to ensure quality. This is consistent with:</p>
+        <p>7. A manager micromanages a team, checking every task daily. This behavior is most associated with which theory?</p>
         <div class="options">
             <label><input type="radio" name="q7" value="a"> a) Theory X</label>
             <label><input type="radio" name="q7" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q7" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q7" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q7" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q7" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(7)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation7">
-            <strong>Answer:</strong> a) Theory X<br>
-            <strong>Explanation:</strong> Micromanagement reflects Theory X’s assumption that employees lack initiative and need constant oversight to ensure quality and productivity.
+        <button class="answer-button" onclick="toggleAnswer('answer7')">Show Answer</button>
+        <div id="answer7" class="answer">
+            <strong>Answer: a) Theory X</strong><br>
+            Micromanagement reflects Theory X’s assumption that employees need constant monitoring due to a lack of self-motivation or reliability.
         </div>
     </div>
     <div class="question">
-        <p>8. A company offers training to help employees grow and take on new challenges. This aligns with:</p>
+        <p>8. A project manager assumes team members are eager to learn and take on challenging tasks. This assumption aligns with which theory?</p>
         <div class="options">
             <label><input type="radio" name="q8" value="a"> a) Theory X</label>
             <label><input type="radio" name="q8" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q8" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q8" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q8" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q8" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(8)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation8">
-            <strong>Answer:</strong> b) Theory Y<br>
-            <strong>Explanation:</strong> Offering training reflects Theory Y’s belief that employees are eager to learn, grow, and take on new responsibilities when given opportunities.
+        <button class="answer-button" onclick="toggleAnswer('answer8')">Show Answer</button>
+        <div id="answer8" class="answer">
+            <strong>Answer: b) Theory Y</strong><br>
+            Theory Y assumes employees are ambitious, eager to learn, and willing to take on challenges, which matches the manager’s perspective.
         </div>
     </div>
     <div class="question">
-        <p>9. A supervisor believes employees dislike work and need incentives to perform. This is:</p>
+        <p>9. In a call center, employees are given scripts and monitored closely to ensure compliance. This approach is indicative of which theory?</p>
         <div class="options">
             <label><input type="radio" name="q9" value="a"> a) Theory X</label>
             <label><input type="radio" name="q9" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q9" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q9" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q9" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q9" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(9)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation9">
-            <strong>Answer:</strong> a) Theory X<br>
-            <strong>Explanation:</strong> Theory X posits that employees inherently dislike work and require external incentives or pressure to perform, aligning with the supervisor’s belief.
+        <button class="answer-button" onclick="toggleAnswer('answer9')">Show Answer</button>
+        <div id="answer9" class="answer">
+            <strong>Answer: a) Theory X</strong><br>
+            Close monitoring and rigid scripts reflect Theory X’s belief that employees need strict control to perform effectively.
         </div>
     </div>
     <div class="question">
-        <p>10. A team is given autonomy to set their own goals and work methods. This reflects:</p>
+        <p>10. A manager organizes team-building activities to foster collaboration and creativity. This aligns with which theory?</p>
         <div class="options">
             <label><input type="radio" name="q10" value="a"> a) Theory X</label>
             <label><input type="radio" name="q10" value="b"> b) Theory Y</label>
-            <label><input type="radio" name="q10" value="c"> c) Both Theories</label>
-            <label><input type="radio" name="q10" value="d"> d) Neither Theory</label>
+            <label><input type="radio" name="q10" value="c"> c) Both theories</label>
+            <label><input type="radio" name="q10" value="d"> d) Neither theory</label>
         </div>
-        <button onclick="showExplanation(10)">Show Answer & Explanation</button>
-        <div class="explanation" id="explanation10">
-            <strong>Answer:</strong> b) Theory Y<br>
-            <strong>Explanation:</strong> Granting autonomy to set goals and work methods aligns with Theory Y’s assumption that employees are self-motivated and capable of working responsibly without close supervision.
+        <button class="answer-button" onclick="toggleAnswer('answer10')">Show Answer</button>
+        <div id="answer10" class="answer">
+            <strong>Answer: b) Theory Y</strong><br>
+            Theory Y promotes an environment where employees’ creativity and collaboration are valued, as seen in the team-building initiatives.
         </div>
     </div>
 
     <script>
-        function showExplanation(questionNumber) {
-            const explanation = document.getElementById(`explanation${questionNumber}`);
-            explanation.style.display = explanation.style.display === 'block' ? 'none' : 'block';
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            if (answer.style.display === "none" || answer.style.display === "") {
+                answer.style.display = "block";
+            } else {
+                answer.style.display = "none";
+            }
         }
     </script>
 </body>
